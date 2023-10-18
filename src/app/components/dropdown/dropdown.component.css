@@ -1,0 +1,18 @@
+#input{
+    display: flex;
+    text-align: center;
+    padding: 25%;
+}
+
+#dropdown{
+    padding: 3%;
+}
+
+#input-number{
+    padding: 3%;
+}
+
+#button{
+    padding: 3%;
+}
+

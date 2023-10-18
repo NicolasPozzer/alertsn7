@@ -1,0 +1,35 @@
+<div class="container-md">
+  <div id="input">
+    <div class="dropdown" id="dropdown">
+
+      <select class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
+        name="selectedOption" [(ngModel)]="selectedOption">
+
+        <option *ngFor="let item of lista" [value]="item.symbol">{{ item.symbol }} {{ item.current_price}}</option>
+
+      </select>
+    </div>
+
+
+    <form (ngSubmit)="onCreate()" novalidate #f="ngForm">
+
+      <div class="form-group">
+        <input type="text" class="form-control" id="precioEstablecido" name="precioEstablecido"
+          [(ngModel)]="precioEstablecido" required>
+      </div>
+
+      <div>
+        <select class="btn btn-secondary dropdown-toggle" type="text" data-bs-toggle="dropdown" name="direccion"
+          [(ngModel)]="direccion">
+          <option>Long</option>
+          <option>Short</option>
+        </select>
+      </div>
+
+      <button class="btn btn-primary mt-4" data-bs-dismiss="modal">
+        Agregar Habilidad
+      </button>
+    </form>
+  </div>
+
+</div>
