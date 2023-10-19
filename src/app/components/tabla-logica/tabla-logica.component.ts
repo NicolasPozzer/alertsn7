@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { TiketServiceService } from 'src/app/services/tiket-service.service';
 import { interval } from 'rxjs';
 import { startWith, switchMap } from 'rxjs/operators';
+import { TelegramBotService } from 'src/app/services/telegram-bot.service';
 
 @Component({
   selector: 'app-tabla-logica',
@@ -18,13 +19,11 @@ export class TablaLogicaComponent implements OnInit {
   lista: AlertaTicket[] = [];
   alertSound: any;
 
-  constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) {  
-    
-  }
+  constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router,
+    private botService: TelegramBotService) {}
 
   ngOnInit(): void {
     this.alertSound = new Audio('./assets/alert/alert.mp3');
-    
     this.getTickets();
 
     // Obtener datos cada minuto
@@ -44,29 +43,57 @@ export class TablaLogicaComponent implements OnInit {
             console.log('precio establecido: ', alerta.precioEstablecido);
             console.log('Direccion: ', alerta.direccion);
 
+                /*=======================================================*/
+                /*=======================ENCIMA==========================*/
+                /*=======================================================*/
+
             if (alerta.encendido === true && alerta.direccion === 'Encima' && dato.current_price > alerta.precioEstablecido) {
-              console.log(`Alerta para ${dato.symbol}: ¡Precio superó ${alerta.precioEstablecido}!`);
-              alerta.encendido = false;
-              alerta.color = 'table-secondary';
-                //Sonar Alerta
-                this.alertSound.play();
-              this.sTicketService.saveTicket(alerta).subscribe(
-                data => {
-                }, err => {
-                  alert(`Alerta para ${dato.symbol}: ¡Precio superó ${alerta.precioEstablecido}!`);
-                  window.location.reload();
-                }
-              )
-            } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.current_price < alerta.precioEstablecido) {
-              console.log(`Alerta para ${dato.symbol}: ¡Precio cayó por debajo de ${alerta.precioEstablecido}!`);
+              const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
+
+              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`);
               alerta.encendido = false;
               alerta.color = 'table-secondary';
               this.alertSound.play();
+              
+              /*Codigo Bot Telegram*/
+              const chatId = '1603260238'; 
+              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`;
+              this.botService.sendMessage(chatId, mensaje);
+              /*Codigo Bot Telegram*/
+
+
               this.sTicketService.saveTicket(alerta).subscribe(
-                
                 data => {
                 }, err => {
-                  alert(`Alerta para ${dato.symbol}: ¡Precio cayó por debajo de ${alerta.precioEstablecido}!`);
+                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`);
+                  window.location.reload();
+                }
+              )
+
+
+                /*=======================================================*/
+                /*=======================DEBAJO==========================*/
+                /*=======================================================*/
+
+            } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.current_price < alerta.precioEstablecido) {
+              const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
+
+              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`);
+              alerta.encendido = false;
+              alerta.color = 'table-secondary';
+              this.alertSound.play();
+              
+              /*Codigo Bot Telegram*/
+              const chatId = '1603260238'; 
+              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`;
+              this.botService.sendMessage(chatId, mensaje);
+              /*Codigo Bot Telegram*/
+
+
+              this.sTicketService.saveTicket(alerta).subscribe(
+                data => {
+                }, err => {
+                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`);
                   window.location.reload();
                 }
               )
@@ -79,14 +106,17 @@ export class TablaLogicaComponent implements OnInit {
 
   }
 
+  /*=======================TraerTickets==========================*/
   getTickets(): void {
+    
     this.sTicketService.getTickets().subscribe(data => {
       this.listaAlertas = data;
     });
   }
 
-  deleteTicket(id?: number){
-    if(id != undefined){
+  /*=======================BorrarTicket==========================*/
+  deleteTicket(id?: number) {
+    if (id != undefined) {
       this.sTicketService.deleteTicket(id).subscribe(
         data => {
           this.getTickets();
@@ -96,3 +126,4 @@ export class TablaLogicaComponent implements OnInit {
   }
 
 }
+

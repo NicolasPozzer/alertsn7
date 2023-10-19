@@ -15,12 +15,12 @@
   <tbody *ngFor="let listAlerts of listaAlertas" class ="{{ listAlerts.color }}">
     <tr>
       <th scope="row">{{ listAlerts.id }}</th>
-      <td>{{ listAlerts.nombre }}</td>
+      <td>{{ listAlerts.nombre.toUpperCase() }}</td>
       <td>{{ listAlerts.precioEstablecido }}</td>
       <td>{{ listAlerts.direccion }}</td>
       <td>{{ listAlerts.encendido }}</td>
       <td>
-        <a href="" type="button" (click)="deleteTicket(listAlerts.id)">Eliminar</a> 
+        <a href="" type="button" (click)="deleteTicket(listAlerts.id)">✖</a> 
       </td>
     </tr>
   </tbody>
