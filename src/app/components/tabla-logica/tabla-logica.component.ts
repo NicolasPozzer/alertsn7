@@ -18,6 +18,7 @@ export class TablaLogicaComponent implements OnInit {
   listaAlertas: Ticket[] = [];
   lista: AlertaTicket[] = [];
   alertSound: any;
+  liveApi: string = '';
 
   constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router,
     private botService: TelegramBotService) {}
@@ -27,7 +28,7 @@ export class TablaLogicaComponent implements OnInit {
     this.getTickets();
 
     // Obtener datos cada minuto
-    interval(60000) // 60000 milisegundos = 1 minuto
+    interval(30000) // 60000 milisegundos = 1 minuto
       .pipe(
         startWith(0), // Emite el primer valor inmediatamente
         switchMap(() => this.sApiService.getData()) // Cambiar al resultado de la API cada minuto
@@ -38,10 +39,8 @@ export class TablaLogicaComponent implements OnInit {
           const dato = data.find(item => item.symbol === alerta.nombre);
 
           if (dato) {
-            console.log(alerta.nombre);
-            console.log(dato.current_price);
-            console.log('precio establecido: ', alerta.precioEstablecido);
-            console.log('Direccion: ', alerta.direccion);
+            
+            this.liveApi = dato.symbol;
 
                 /*=======================================================*/
                 /*=======================ENCIMA==========================*/
@@ -50,14 +49,14 @@ export class TablaLogicaComponent implements OnInit {
             if (alerta.encendido === true && alerta.direccion === 'Encima' && dato.current_price > alerta.precioEstablecido) {
               const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
 
-              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`);
+              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `);
               alerta.encendido = false;
               alerta.color = 'table-secondary';
               this.alertSound.play();
               
               /*Codigo Bot Telegram*/
               const chatId = '1603260238'; 
-              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`;
+              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `;
               this.botService.sendMessage(chatId, mensaje);
               /*Codigo Bot Telegram*/
 
@@ -65,7 +64,7 @@ export class TablaLogicaComponent implements OnInit {
               this.sTicketService.saveTicket(alerta).subscribe(
                 data => {
                 }, err => {
-                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 ${alerta.precioEstablecido}!.`);
+                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `);
                   window.location.reload();
                 }
               )
@@ -78,14 +77,14 @@ export class TablaLogicaComponent implements OnInit {
             } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.current_price < alerta.precioEstablecido) {
               const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
 
-              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`);
+              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `);
               alerta.encendido = false;
               alerta.color = 'table-secondary';
               this.alertSound.play();
               
               /*Codigo Bot Telegram*/
               const chatId = '1603260238'; 
-              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`;
+              const mensaje = `🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `;
               this.botService.sendMessage(chatId, mensaje);
               /*Codigo Bot Telegram*/
 
@@ -93,16 +92,19 @@ export class TablaLogicaComponent implements OnInit {
               this.sTicketService.saveTicket(alerta).subscribe(
                 data => {
                 }, err => {
-                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de ${alerta.precioEstablecido}!.`);
+                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `);
                   window.location.reload();
                 }
               )
             }
+
           }
 
         });
       });
 
+
+      
 
   }
 

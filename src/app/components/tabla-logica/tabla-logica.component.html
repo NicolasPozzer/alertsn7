@@ -1,4 +1,10 @@
 <!-- On tables -->
+<div *ngIf="liveApi">
+  <p>liveApi = ✅</p>
+</div>
+<div *ngIf="!liveApi">
+  <p>La API no está disponible</p>
+</div>
 <div id="tabla">
 <table class="table table-dark table-striped">
     <thead>
@@ -14,7 +20,7 @@
 
   <tbody *ngFor="let listAlerts of listaAlertas" class ="{{ listAlerts.color }}">
     <tr>
-      <th scope="row">{{ listAlerts.id }}</th>
+      <th scope="row">🔔</th>
       <td>{{ listAlerts.nombre.toUpperCase() }}</td>
       <td>{{ listAlerts.precioEstablecido }}</td>
       <td>{{ listAlerts.direccion }}</td>
