@@ -19,6 +19,7 @@ export class DropdownComponent implements OnInit {
   precioEstablecido: number = 0;
   direccion: string = '';
   encendido: boolean = true;
+  color: string = 'table-primary';
 
   constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) { }
 
@@ -48,17 +49,18 @@ export class DropdownComponent implements OnInit {
 
     this.nombre = this.selectedOption;
 
-    const tic = new Ticket(this.nombre, this.precioEstablecido, this.direccion, this.encendido);
+    const tic = new Ticket(this.nombre, this.precioEstablecido, this.direccion, this.encendido, this.color);
     this.sTicketService.saveTicket(tic).subscribe(
       data => {
         alert("Alerta creada!");
-        this.router.navigate(['']);
+        window.location.reload();
       }, err => {
-        alert("Error Falló agregar al Agregar Alerta");
-        this.router.navigate(['']);
+        alert("Alerta creada!");
+        window.location.reload();
       }
     )
   }
+
 
 }
 

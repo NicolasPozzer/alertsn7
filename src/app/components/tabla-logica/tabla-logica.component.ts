@@ -16,11 +16,15 @@ export class TablaLogicaComponent implements OnInit {
 
   listaAlertas: Ticket[] = [];
   lista: AlertaTicket[] = [];
-  cambiarColorTabla: string = '';
+  alertSound: any;
 
-  constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) { }
+  constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) {  
+    
+  }
 
   ngOnInit(): void {
+    this.alertSound = new Audio('./assets/alert/alert.mp3');
+    
     this.getTickets();
 
     // Obtener datos cada minuto
@@ -40,17 +44,31 @@ export class TablaLogicaComponent implements OnInit {
             console.log('precio establecido: ', alerta.precioEstablecido);
             console.log('Direccion: ', alerta.direccion);
 
-            if (alerta.encendido === true && alerta.direccion === 'Long' && dato.current_price > alerta.precioEstablecido) {
+            if (alerta.encendido === true && alerta.direccion === 'Encima' && dato.current_price > alerta.precioEstablecido) {
               console.log(`Alerta para ${dato.symbol}: ¡Precio superó ${alerta.precioEstablecido}!`);
               alerta.encendido = false;
+              alerta.color = 'table-secondary';
+                //Sonar Alerta
+                this.alertSound.play();
               this.sTicketService.saveTicket(alerta).subscribe(
-                data => {}
+                data => {
+                }, err => {
+                  alert(`Alerta para ${dato.symbol}: ¡Precio superó ${alerta.precioEstablecido}!`);
+                  window.location.reload();
+                }
               )
-            } else if (alerta.encendido === true && alerta.direccion === 'Short' && dato.current_price < alerta.precioEstablecido) {
+            } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.current_price < alerta.precioEstablecido) {
               console.log(`Alerta para ${dato.symbol}: ¡Precio cayó por debajo de ${alerta.precioEstablecido}!`);
               alerta.encendido = false;
+              alerta.color = 'table-secondary';
+              this.alertSound.play();
               this.sTicketService.saveTicket(alerta).subscribe(
-                data => {}
+                
+                data => {
+                }, err => {
+                  alert(`Alerta para ${dato.symbol}: ¡Precio cayó por debajo de ${alerta.precioEstablecido}!`);
+                  window.location.reload();
+                }
               )
             }
           }

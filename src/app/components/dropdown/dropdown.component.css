@@ -1,18 +1,32 @@
-#input{
-    display: flex;
+.container{
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 10%;
     text-align: center;
-    padding: 25%;
+    margin-bottom: 5%;
 }
 
-#dropdown{
-    padding: 3%;
+#input{
+    
+    display: flex;
+    
+}
+
+#form{
+    display: flex;
 }
 
 #input-number{
-    padding: 3%;
+    padding: 20px;
+  
 }
 
-#button{
-    padding: 3%;
+#select{
+    padding-top: 20px;
+}
+
+
+#select-direccion{
+    padding-top: 20px;
 }
 

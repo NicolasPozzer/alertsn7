@@ -1,5 +1,6 @@
 <!-- On tables -->
-<table class="table table-warning table-striped">
+<div id="tabla">
+<table class="table table-dark table-striped">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -7,11 +8,11 @@
       <th scope="col">PrecioEjecucion</th>
       <th scope="col">Direccion</th>
       <th scope="col">Encendido??</th>
-      <th scope="col">Encendido??</th>
+      <th scope="col"></th>
     </tr>
   </thead>
 
-  <tbody *ngFor="let listAlerts of listaAlertas"   >
+  <tbody *ngFor="let listAlerts of listaAlertas" class ="{{ listAlerts.color }}">
     <tr>
       <th scope="row">{{ listAlerts.id }}</th>
       <td>{{ listAlerts.nombre }}</td>
@@ -19,9 +20,9 @@
       <td>{{ listAlerts.direccion }}</td>
       <td>{{ listAlerts.encendido }}</td>
       <td>
-        <a href="" type="button" (click)="deleteTicket(listAlerts.id)">Eliminar></a> 
-        </td>
+        <a href="" type="button" (click)="deleteTicket(listAlerts.id)">Eliminar</a> 
+      </td>
     </tr>
   </tbody>
-
 </table>
+</div>
