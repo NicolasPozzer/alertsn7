@@ -6,26 +6,21 @@
       <th scope="col">Ticket</th>
       <th scope="col">PrecioEjecucion</th>
       <th scope="col">Direccion</th>
+      <th scope="col">Encendido??</th>
+      <th scope="col">Encendido??</th>
     </tr>
   </thead>
 
-  <tbody>
+  <tbody *ngFor="let listAlerts of listaAlertas"   >
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td colspan="2">Larry the Bird</td>
-      <td>@twitter</td>
+      <th scope="row">{{ listAlerts.id }}</th>
+      <td>{{ listAlerts.nombre }}</td>
+      <td>{{ listAlerts.precioEstablecido }}</td>
+      <td>{{ listAlerts.direccion }}</td>
+      <td>{{ listAlerts.encendido }}</td>
+      <td>
+        <a href="" type="button" (click)="deleteTicket(listAlerts.id)">Eliminar></a> 
+        </td>
     </tr>
   </tbody>
 

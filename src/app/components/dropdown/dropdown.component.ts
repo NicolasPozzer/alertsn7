@@ -18,11 +18,13 @@ export class DropdownComponent implements OnInit {
   nombre: string = '';
   precioEstablecido: number = 0;
   direccion: string = '';
+  encendido: boolean = true;
 
   constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) { }
 
   ngOnInit(): void {
     this.getData();
+    
     
   }
 
@@ -46,7 +48,7 @@ export class DropdownComponent implements OnInit {
 
     this.nombre = this.selectedOption;
 
-    const tic = new Ticket(this.nombre, this.precioEstablecido, this.direccion);
+    const tic = new Ticket(this.nombre, this.precioEstablecido, this.direccion, this.encendido);
     this.sTicketService.saveTicket(tic).subscribe(
       data => {
         alert("Alerta creada!");
