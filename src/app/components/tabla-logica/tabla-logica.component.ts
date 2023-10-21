@@ -31,7 +31,7 @@ export class TablaLogicaComponent implements OnInit {
     interval(30000) // 60000 milisegundos = 1 minuto
       .pipe(
         startWith(0), // Emite el primer valor inmediatamente
-        switchMap(() => this.sApiService.getData()) // Cambiar al resultado de la API cada minuto
+        switchMap(() => this.sApiService.getData()), // Cambiar al resultado de la API cada minuto
       )
       .subscribe(data => {
         // Lógica para verificar si el precio supera ciertos valores y emitir alertas
@@ -61,12 +61,12 @@ export class TablaLogicaComponent implements OnInit {
               /*Codigo Bot Telegram*/
 
 
-              this.sTicketService.saveTicket(alerta).subscribe(
-                data => {
-                }, err => {
-                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `);
-                  window.location.reload();
-                }
+              setTimeout(() => {
+                window.location.reload();
+                }, 15000); // 15000 milisegundos = 15 segundos
+
+                this.sTicketService.saveTicket(alerta).subscribe(
+                data => {}
               )
 
 
@@ -88,13 +88,13 @@ export class TablaLogicaComponent implements OnInit {
               this.botService.sendMessage(chatId, mensaje);
               /*Codigo Bot Telegram*/
 
+              // Esperar 15 segundos y luego recargar la página
+                setTimeout(() => {
+                window.location.reload();
+                }, 15000); // 15000 milisegundos = 15 segundos
 
-              this.sTicketService.saveTicket(alerta).subscribe(
-                data => {
-                }, err => {
-                  alert(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `);
-                  window.location.reload();
-                }
+                this.sTicketService.saveTicket(alerta).subscribe(
+                data => {}
               )
             }
 
@@ -102,18 +102,18 @@ export class TablaLogicaComponent implements OnInit {
 
         });
       });
-
-
-      
-
   }
 
   /*=======================TraerTickets==========================*/
   getTickets(): void {
-    
     this.sTicketService.getTickets().subscribe(data => {
       this.listaAlertas = data;
     });
+
+    //Refrescar lista despues de 1hora
+    setTimeout(() => {
+      window.location.reload();
+      }, 1800000);
   }
 
   /*=======================BorrarTicket==========================*/

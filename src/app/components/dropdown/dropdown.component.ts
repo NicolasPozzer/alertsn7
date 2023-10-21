@@ -52,8 +52,6 @@ export class DropdownComponent implements OnInit {
     const tic = new Ticket(this.nombre, this.precioEstablecido, this.direccion, this.encendido, this.color);
     this.sTicketService.saveTicket(tic).subscribe(
       data => {
-        alert("Alerta creada!");
-        window.location.reload();
       }, err => {
         alert("Alerta creada!");
         window.location.reload();
