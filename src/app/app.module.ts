@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { TiketComponent } from './components/tiket/tiket.component';
 import { GuiComponent } from './components/gui/gui.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { TablaLogicaComponent } from './components/tabla-logica/tabla-logica.component';
@@ -16,7 +15,6 @@ import { TablaLogicaComponent } from './components/tabla-logica/tabla-logica.com
   declarations: [
     AppComponent,
     HomeComponent,
-    TiketComponent,
     GuiComponent,
     DropdownComponent,
     TablaLogicaComponent

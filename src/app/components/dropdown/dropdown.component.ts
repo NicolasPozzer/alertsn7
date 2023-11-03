@@ -31,11 +31,18 @@ export class DropdownComponent implements OnInit {
 
   getData(): void {
     this.sApiService.getData().subscribe(data => {
+
+      //-----------CON FILTRO DE ACTIVOS------------------
       // IDs de los elementos que deseas obtener
-      const idsDeseados = ['bitcoin', 'binancecoin', 'ripple'];
+      /*const idsDeseados = ['bitcoin', 'binancecoin', 'ripple']; 
 
       // Filtra los objetos por sus IDs
-      this.lista = data.filter(item => idsDeseados.includes(item.id));
+      this.lista = data.filter(item => idsDeseados.includes(item.id));*/
+
+
+      
+      //-----------SIN FILTRO DE ACTIVOS------------------
+      this.lista = data.filter(item => (item.id));
     });
   }
 
