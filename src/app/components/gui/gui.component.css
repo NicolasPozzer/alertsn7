@@ -1,23 +1,25 @@
-
-.container-md.text-center{
+.container-md.text-center {
     margin-top: 33px;
 }
 
-#container-general{
-        
-        max-width: 750px;
-        margin: 10px auto;
-        overflow: auto;
-        min-height: 300px;
-        border: 2px solid steelblue;
-        padding: 15px;
-        border-radius: 5px;
-    
+#container-general {
+
+    max-width: 750px;
+    margin: 10px auto;
+    overflow: auto;
+    min-height: 300px;
+    border: 2px solid steelblue;
+    padding: 15px;
+    border-radius: 5px;
+
 }
 
-#titulo{
+#titulo {
     padding: 5%;
 }
 
-
-
+#firma {
+    position: relative;
+    padding-left: 80%;
+    margin-bottom: -3%;
+}
