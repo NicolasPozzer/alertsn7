@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class TiketServiceService {
 
-  private URL = 'http://192.168.1.77:8080/tickets';
-  //private URL = 'http://localhost:8080/tickets';
+  private URL = 'https://alertsn7-back.onrender.com/tickets';
+  //private URL = 'http://192.168.1.77:8080/tickets';
 
   constructor(private httpClient: HttpClient) { }
 

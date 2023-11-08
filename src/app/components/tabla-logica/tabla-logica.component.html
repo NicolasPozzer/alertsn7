@@ -1,10 +1,23 @@
-<!-- On tables -->
+<!-- Alerta De Escritorio -->
+<div *ngIf="alerta1" id="alerta1" class="alert alert-primary" role="alert">
+  {{ alerta1 }}
+</div>
+
+<div *ngIf="alerta2" id="alerta2" class="alert alert-primary" role="alert">
+  {{ alerta2 }}
+</div>
+
+
+
+<!-- Live Api -->
 <div *ngIf="liveApi">
   <p>liveApi = ✅</p>
 </div>
 <div *ngIf="!liveApi">
   <p>La API no está disponible</p>
 </div>
+
+
 <div id="tabla">
 <table class="table table-dark table-striped">
     <thead>

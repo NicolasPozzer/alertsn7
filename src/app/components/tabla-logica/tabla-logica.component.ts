@@ -19,6 +19,8 @@ export class TablaLogicaComponent implements OnInit {
   lista: AlertaTicket[] = [];
   alertSound: any;
   liveApi: string = '';
+  alerta1: string = '';
+  alerta2: string = '';
 
   constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router,
     private botService: TelegramBotService) {}
@@ -49,6 +51,8 @@ export class TablaLogicaComponent implements OnInit {
             if (alerta.encendido === true && alerta.direccion === 'Encima' && dato.current_price > alerta.precioEstablecido) {
               const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
 
+              this.alerta1 = `🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `;
+
               console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `);
               alerta.encendido = false;
               alerta.color = 'table-secondary';
@@ -76,6 +80,8 @@ export class TablaLogicaComponent implements OnInit {
 
             } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.current_price < alerta.precioEstablecido) {
               const symbolEnMayuscula = dato.symbol.toUpperCase(); // Convierte dato.symbol a mayúsculas
+
+              this.alerta2 = `🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `;
 
               console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `);
               alerta.encendido = false;
