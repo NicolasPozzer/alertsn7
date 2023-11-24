@@ -9,6 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { GuiComponent } from './components/gui/gui.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { TablaLogicaComponent } from './components/tabla-logica/tabla-logica.component';
+import { AssetComponent } from './components/gui/asset/asset.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TablaLogicaComponent } from './components/tabla-logica/tabla-logica.com
     HomeComponent,
     GuiComponent,
     DropdownComponent,
-    TablaLogicaComponent
+    TablaLogicaComponent,
+    AssetComponent
   ],
   imports: [
     BrowserModule,

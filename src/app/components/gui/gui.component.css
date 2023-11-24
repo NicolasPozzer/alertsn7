@@ -20,6 +20,12 @@
 
 #firma {
     position: relative;
-    padding-left: 80%;
-    margin-bottom: -3%;
+    display: flex;
+    padding-left: 67%;
+    margin-left: 4%;
+    margin-bottom: -2%;
+}
+
+#letra{
+    margin-right: 3%;
 }
