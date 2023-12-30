@@ -29,3 +29,14 @@
 #letra{
     margin-right: 3%;
 }
+
+/*GITHUB*/
+.fa-brands.fa-github.fa-2xl{
+    color: black;
+    padding-right: 5px;
+}
+
+.fa-brands.fa-github.fa-2xl:hover{
+    color:#d1d1d1;
+    cursor: pointer;
+}

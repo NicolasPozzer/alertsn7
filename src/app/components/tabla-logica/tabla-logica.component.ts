@@ -127,7 +127,9 @@ export class TablaLogicaComponent implements OnInit {
     if (id != undefined) {
       this.sTicketService.deleteTicket(id).subscribe(
         data => {
-          this.getTickets();
+        }, err => {
+          alert("Alerta Eliminada.");
+          window.location.reload();
         }
       )
     }
