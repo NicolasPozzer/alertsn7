@@ -1,10 +1,12 @@
 export class AlertaTicket {
-    baseAsset: string;
-    lastPrice: number;
+    id: string;
+    symbol: string;
+    current_price: number;
 
 
-    constructor(baseAsset: string, lastPrice: number){
-        this.baseAsset = baseAsset;
-        this.lastPrice = lastPrice;
+    constructor(id: string, symbol: string, current_price: number){
+        this.id = id;
+        this.symbol = symbol;
+        this.current_price = current_price;
     }
 }
