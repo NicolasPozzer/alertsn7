@@ -16,72 +16,24 @@ export class TablaLogicaComponent implements OnInit {
 
   listaAlertas: Ticket[] = [];
   lista: AlertaTicket[] = [];
-  alertSound: any;
   liveApi: string = '';
+  liveBack: string = '';
   alerta1: string = '';
   alerta2: string = '';
 
   constructor(private sApiService: ApiService, private sTicketService: TiketServiceService, private router: Router) { }
 
   ngOnInit(): void {
-    this.alertSound = new Audio('./assets/alert/alert.mp3');
     this.getTickets();
-
+    setTimeout(() => {
+      this.getData();
+      }, 36000);
 
     // Obtener datos cada minuto
-    interval(12000).pipe(startWith(0), switchMap(() => this.sApiService.getData()))
+    interval(600000).pipe(startWith(0))
       .subscribe(data => {
-        // Lógica para verificar si el precio supera ciertos valores y emitir alertas
-        this.listaAlertas.forEach(alerta => {
-
-          const dato = data.find(item => item.baseAsset === alerta.nombre);
-
-          if (dato) {
-
-            this.liveApi = dato.baseAsset;
-
-            /*=======================================================*/
-            /*=======================ENCIMA==========================*/
-            /*=======================================================*/
-
-            if (alerta.encendido === true && alerta.direccion === 'Encima' && dato.lastPrice > alerta.precioEstablecido) {
-              const symbolEnMayuscula = dato.baseAsset.toUpperCase(); // Convierte dato.symbol a mayúsculas
-
-              this.alerta1 = `🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `;
-
-              console.log(`🔔 Alerta para |${symbolEnMayuscula}| ¡El Precio Supero los: 🔼 $${alerta.precioEstablecido}  `);
-              alerta.encendido = false;
-              alerta.color = 'table-secondary';
-              this.alertSound.play();
-
-
-              setTimeout(() => {
-                window.location.reload();
-              }, 15000); // 15000 milisegundos = 15 segundos
-
-              /*=======================================================*/
-              /*=======================DEBAJO==========================*/
-              /*=======================================================*/
-
-            } else if (alerta.encendido === true && alerta.direccion === 'Debajo' && dato.lastPrice < alerta.precioEstablecido) {
-              const symbolEnMayuscula = dato.baseAsset.toUpperCase(); // Convierte dato.symbol a mayúsculas
-
-              this.alerta2 = `🔔 Alerta para |${symbolEnMayuscula}| ¡Precio cayó 🔽 por debajo de $${alerta.precioEstablecido}  `;
-
-              alerta.encendido = false;
-              alerta.color = 'table-secondary';
-              this.alertSound.play();
-
-              // Esperar 15 segundos y luego recargar la página
-              setTimeout(() => {
-                window.location.reload();
-              }, 15000); // 15000 milisegundos = 15 segundos
-
-            }
-            
-          }
-        })
         this.getTickets();
+        console.log('Esto es un Refresh de la lista CADA 10 MINUTOS!');
       });
   }
 
@@ -89,15 +41,19 @@ export class TablaLogicaComponent implements OnInit {
   getTickets(): void {
     this.sTicketService.getTickets().subscribe(data => {
       this.listaAlertas = data;
+      this.liveBack = 'live-back'
+      console.log('live-back!');
     });
   }
 
   getData(): void {
     this.sApiService.getData().subscribe(data => {
-      this.lista = data;
+        this.lista = data;
+        this.liveApi = 'nice';
+        console.log('data lista!!');
     });
   }
-
+  
   /*Refrescar lista despues de 1hora
   setTimeout(() => {
     window.location.reload();

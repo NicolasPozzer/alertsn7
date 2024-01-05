@@ -7,14 +7,20 @@
   {{ alerta2 }}
 </div>
 
-
-
 <!-- Live Api -->
 <div *ngIf="liveApi">
   <p>liveApi = ✅</p>
 </div>
 <div *ngIf="!liveApi">
   <p>La API no está disponible</p>
+</div>
+
+<!-- Live Backend -->
+<div *ngIf="liveBack">
+  <p>liveBack = ✅</p>
+</div>
+<div *ngIf="!liveBack">
+  <p>El Backend de la App no está disponible!</p>
 </div>
 
 

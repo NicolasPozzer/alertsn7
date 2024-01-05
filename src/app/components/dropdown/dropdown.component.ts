@@ -13,7 +13,6 @@ import { TiketServiceService } from 'src/app/services/tiket-service.service';
 })
 export class DropdownComponent implements OnInit {
   lista: AlertaTicket[] = [];
-  listaAlertas: Ticket[] = [];
 
   selectedOption: string = ''; // Propiedad para almacenar la opción seleccionada
   nombre: string = '';
@@ -26,8 +25,6 @@ export class DropdownComponent implements OnInit {
 
   ngOnInit(): void {
     this.getData();
-    
-    
   }
 
   getData(): void {
@@ -40,19 +37,15 @@ export class DropdownComponent implements OnInit {
       // Filtra los objetos por sus IDs
       this.lista = data.filter(item => idsDeseados.includes(item.id));*/
 
-
-      
       //-----------SIN FILTRO DE ACTIVOS------------------
-      this.lista = data;
+      setTimeout(() => {
+        this.lista = data;
+        }, 3000); 
+
+      console.log('data lista!!');
+      
     });
   }
-
-  getTickets(): void {
-    this.sTicketService.getTickets().subscribe(data => {
-      this.listaAlertas = data;
-    });
-  }
-
 
   onCreate(): void {
 
@@ -66,8 +59,8 @@ export class DropdownComponent implements OnInit {
     this.sTicketService.saveTicket(tic).subscribe(
       data => {
       }, err => {
-        alert("Alerta creada!");
-        this.getTickets();
+        alert("Alerta Creada!");
+        window.location.reload();
       }
     )
   }
