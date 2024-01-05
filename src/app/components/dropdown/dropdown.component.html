@@ -5,7 +5,7 @@
       <select class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"
         name="selectedOption" [(ngModel)]="selectedOption">
 
-        <option *ngFor="let item of lista" [value]="item.symbol">{{ item.symbol }} {{ item.current_price}}</option>
+        <option *ngFor="let item of lista" [value]="item.baseAsset">{{ item.baseAsset }} {{ item.lastPrice}}</option>
 
       </select>
       </div>

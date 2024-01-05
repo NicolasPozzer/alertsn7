@@ -7,7 +7,7 @@ import { AlertaTicket } from '../model/alerta-ticket';
   providedIn: 'root'
 })
 export class ApiService {
-  private URL = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd';
+  private URL = 'https://api.wazirx.com/sapi/v1/tickers/24hr';
 
   constructor(private httpClient: HttpClient) { }
 

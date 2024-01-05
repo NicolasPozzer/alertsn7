@@ -13,6 +13,7 @@ import { TiketServiceService } from 'src/app/services/tiket-service.service';
 })
 export class DropdownComponent implements OnInit {
   lista: AlertaTicket[] = [];
+  listaAlertas: Ticket[] = [];
 
   selectedOption: string = ''; // Propiedad para almacenar la opción seleccionada
   nombre: string = '';
@@ -42,10 +43,15 @@ export class DropdownComponent implements OnInit {
 
       
       //-----------SIN FILTRO DE ACTIVOS------------------
-      this.lista = data.filter(item => (item.id));
+      this.lista = data;
     });
   }
 
+  getTickets(): void {
+    this.sTicketService.getTickets().subscribe(data => {
+      this.listaAlertas = data;
+    });
+  }
 
 
   onCreate(): void {
@@ -61,7 +67,7 @@ export class DropdownComponent implements OnInit {
       data => {
       }, err => {
         alert("Alerta creada!");
-        window.location.reload();
+        this.getTickets();
       }
     )
   }
